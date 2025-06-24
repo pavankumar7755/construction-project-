@@ -1,0 +1,35 @@
+Project Utilisation SVG = 
+VAR Bar_Fill =  [Budget Utilisation] *200
+VAR Bar_Text = [Budget Utilisation]
+VAR Formatted_Bar_Text = FORMAT(Bar_Text, "#.0%")
+VAR SVG_Data_URL = "data:image/svg+xml;utf8,"
+VAR SVG_Start = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 25'>"
+VAR SVG_Data =
+"
+<rect fill='#eee' x='10' y='5' rx='3' ry='3' width='200' height='20' />
+<rect fill='#6F5BE0' x='10' y='5' rx='3' ry='3' width='" & Bar_Fill & "' height='20' />
+<text font-family='Trebuchet MS' font-size='1em' fill='grey' x='"& Bar_Fill + 36 &"' y='20'>" & Formatted_Bar_Text & "</text>
+<circle stroke-width='2' stroke='#6F5BE0' fill='#fff' cx='" & Bar_Fill+10 & "' cy='15' r='10'/>
+"
+VAR SVG_End = "</svg>"
+RETURN 
+    SVG_Data_URL & SVG_Start & SVG_Data & SVG_End
+	
+
+
+
+
+
+
+	
+Calendar = 
+    ADDCOLUMNS(
+        CALENDARAUTO(),
+        "Year", YEAR([Date]),
+        "Month", FORMAT([Date],"mmm"),
+        "Monthnum", MONTH([Date]),
+        "Weekday", FORMAT([Date], "ddd"),
+        "Weeknum", WEEKDAY([Date]),
+        "Qtr", "Q-" & FORMAT([Date], "Q"),
+        "WeekType", IF(WEEKDAY([Date])=1 || WEEKDAY([Date]) = 7 , "Weekend", "Weekday")
+    )
